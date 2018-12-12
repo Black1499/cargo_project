@@ -62,4 +62,13 @@ public class Comment {
     public void setComContext(String comContext) {
         this.comContext = comContext == null ? null : comContext.trim();
     }
+
+    public Comment() {
+    }
+
+    public Comment(Integer comPostId, String comMan, String comContext) {
+        this.comPostId = comPostId;
+        this.comMan = comMan;
+        this.comContext = comContext;
+    }
 }

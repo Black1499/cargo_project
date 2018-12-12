@@ -9,34 +9,28 @@
     <result column="com_agree_count" jdbcType="INTEGER" property="comAgreeCount" />
     <result column="com_context" jdbcType="LONGVARCHAR" property="comContext" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from comment
-    where com_id = #{comId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.lzx.entity.Comment">
-    insert into comment (com_id, com_post_id, com_man, 
-      com_commen, com_agree_count, com_context
-      )
-    values (#{comId,jdbcType=INTEGER}, #{comPostId,jdbcType=INTEGER}, #{comMan,jdbcType=VARCHAR}, 
-      #{comCommen,jdbcType=TIMESTAMP}, #{comAgreeCount,jdbcType=INTEGER}, #{comContext,jdbcType=LONGVARCHAR}
-      )
+
+  <insert id="insert" parameterType="com.lzx.entity.Comment" useGeneratedKeys="true" keyColumn="com_id">
+    insert into comment (com_post_id, com_man, com_commen, com_agree_count, com_context)
+    values (#{comPostId,jdbcType=INTEGER}, #{comMan,jdbcType=VARCHAR}, now(), 0, #{comContext,jdbcType=LONGVARCHAR})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.lzx.entity.Comment">
+
+  <update id="updateAgreeCount">
     update comment
-    set com_post_id = #{comPostId,jdbcType=INTEGER},
-      com_man = #{comMan,jdbcType=VARCHAR},
-      com_commen = #{comCommen,jdbcType=TIMESTAMP},
-      com_agree_count = #{comAgreeCount,jdbcType=INTEGER},
-      com_context = #{comContext,jdbcType=LONGVARCHAR}
+    set
+      com_agree_count = #{comAgreeCount,jdbcType=INTEGER}
     where com_id = #{comId,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+
+  <select id="selectByPostId" resultType="com.lzx.entity.Comment">
     select com_id, com_post_id, com_man, com_commen, com_agree_count, com_context
     from comment
-    where com_id = #{comId,jdbcType=INTEGER}
+    where com_post_id = #{postId,jdbcType=INTEGER} order by com_agree_count desc
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select com_id, com_post_id, com_man, com_commen, com_agree_count, com_context
-    from comment
+
+  <select id="countCommentByPostId" resultType="java.util.Map">
+    select com_post_id,count(*) from comment where com_post_id = #{postId,jdbcType=INTEGER}
   </select>
+
 </mapper>

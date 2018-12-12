@@ -5,6 +5,8 @@ import java.util.Date;
 public class Post {
     private Integer postId;
 
+    private String postPhoto;
+
     private String postMan;
 
     private Date postTime;
@@ -19,6 +21,14 @@ public class Post {
 
     public void setPostId(Integer postId) {
         this.postId = postId;
+    }
+
+    public String getPostPhoto() {
+        return postPhoto;
+    }
+
+    public void setPostPhoto(String postPhoto) {
+        this.postPhoto = postPhoto == null ? null : postPhoto.trim();
     }
 
     public String getPostMan() {
@@ -51,5 +61,15 @@ public class Post {
 
     public void setPostContext(String postContext) {
         this.postContext = postContext == null ? null : postContext.trim();
+    }
+
+    public Post() {
+    }
+
+    public Post(String postPhoto, String postMan, Date postTime, String postContext) {
+        this.postPhoto = postPhoto;
+        this.postMan = postMan;
+        this.postTime = postTime;
+        this.postContext = postContext;
     }
 }

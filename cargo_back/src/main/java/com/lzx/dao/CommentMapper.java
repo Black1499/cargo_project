@@ -1,16 +1,24 @@
 package com.lzx.dao;
 
 import com.lzx.entity.Comment;
-import java.util.List;
+import org.apache.ibatis.annotations.MapKey;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author lzx
+ * @date 2018/12/12
+ */
 public interface CommentMapper {
-    int deleteByPrimaryKey(Integer comId);
 
     int insert(Comment record);
 
-    Comment selectByPrimaryKey(Integer comId);
+    List<Comment> selectByPostId(Integer postId);
 
-    List<Comment> selectAll();
+    int updateAgreeCount(int comId);
 
-    int updateByPrimaryKey(Comment record);
+    @MapKey("com_post_id")
+    Map<Integer, Integer> countCommentByPostId(Integer postId);
 }
