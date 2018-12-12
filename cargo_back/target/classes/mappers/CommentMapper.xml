@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzx.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.lzx.entity.Comment">
+    <id column="com_id" jdbcType="INTEGER" property="comId" />
+    <result column="com_post_id" jdbcType="INTEGER" property="comPostId" />
+    <result column="com_man" jdbcType="VARCHAR" property="comMan" />
+    <result column="com_commen" jdbcType="TIMESTAMP" property="comCommen" />
+    <result column="com_agree_count" jdbcType="INTEGER" property="comAgreeCount" />
+    <result column="com_context" jdbcType="LONGVARCHAR" property="comContext" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comment
+    where com_id = #{comId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzx.entity.Comment">
+    insert into comment (com_id, com_post_id, com_man, 
+      com_commen, com_agree_count, com_context
+      )
+    values (#{comId,jdbcType=INTEGER}, #{comPostId,jdbcType=INTEGER}, #{comMan,jdbcType=VARCHAR}, 
+      #{comCommen,jdbcType=TIMESTAMP}, #{comAgreeCount,jdbcType=INTEGER}, #{comContext,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzx.entity.Comment">
+    update comment
+    set com_post_id = #{comPostId,jdbcType=INTEGER},
+      com_man = #{comMan,jdbcType=VARCHAR},
+      com_commen = #{comCommen,jdbcType=TIMESTAMP},
+      com_agree_count = #{comAgreeCount,jdbcType=INTEGER},
+      com_context = #{comContext,jdbcType=LONGVARCHAR}
+    where com_id = #{comId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select com_id, com_post_id, com_man, com_commen, com_agree_count, com_context
+    from comment
+    where com_id = #{comId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select com_id, com_post_id, com_man, com_commen, com_agree_count, com_context
+    from comment
+  </select>
+</mapper>

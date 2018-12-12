@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzx.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.lzx.entity.Order">
+    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="order_rel_user" jdbcType="INTEGER" property="orderRelUser" />
+    <result column="order_rec_user" jdbcType="INTEGER" property="orderRecUser" />
+    <result column="order_car_type_id" jdbcType="INTEGER" property="orderCarTypeId" />
+    <result column="order_created" jdbcType="TIMESTAMP" property="orderCreated" />
+    <result column="order_describe" jdbcType="VARCHAR" property="orderDescribe" />
+    <result column="order_money" jdbcType="DECIMAL" property="orderMoney" />
+    <result column="order_start_place" jdbcType="VARCHAR" property="orderStartPlace" />
+    <result column="order_end_place" jdbcType="VARCHAR" property="orderEndPlace" />
+    <result column="order_state" jdbcType="VARCHAR" property="orderState" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lzx.entity.Order">
+    insert into order (order_id, order_rel_user, order_rec_user, 
+      order_car_type_id, order_created, order_describe, 
+      order_money, order_start_place, order_end_place, 
+      order_state)
+    values (#{orderId,jdbcType=INTEGER}, #{orderRelUser,jdbcType=INTEGER}, #{orderRecUser,jdbcType=INTEGER}, 
+      #{orderCarTypeId,jdbcType=INTEGER}, #{orderCreated,jdbcType=TIMESTAMP}, #{orderDescribe,jdbcType=VARCHAR}, 
+      #{orderMoney,jdbcType=DECIMAL}, #{orderStartPlace,jdbcType=VARCHAR}, #{orderEndPlace,jdbcType=VARCHAR}, 
+      #{orderState,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzx.entity.Order">
+    update order
+    set order_rel_user = #{orderRelUser,jdbcType=INTEGER},
+      order_rec_user = #{orderRecUser,jdbcType=INTEGER},
+      order_car_type_id = #{orderCarTypeId,jdbcType=INTEGER},
+      order_created = #{orderCreated,jdbcType=TIMESTAMP},
+      order_describe = #{orderDescribe,jdbcType=VARCHAR},
+      order_money = #{orderMoney,jdbcType=DECIMAL},
+      order_start_place = #{orderStartPlace,jdbcType=VARCHAR},
+      order_end_place = #{orderEndPlace,jdbcType=VARCHAR},
+      order_state = #{orderState,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select order_id, order_rel_user, order_rec_user, order_car_type_id, order_created, 
+    order_describe, order_money, order_start_place, order_end_place, order_state
+    from order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select order_id, order_rel_user, order_rec_user, order_car_type_id, order_created, 
+    order_describe, order_money, order_start_place, order_end_place, order_state
+    from order
+  </select>
+</mapper>

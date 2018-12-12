@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzx.dao.OrderOpeartionMapper">
+  <resultMap id="BaseResultMap" type="com.lzx.entity.OrderOpeartion">
+    <id column="ope_id" jdbcType="INTEGER" property="opeId" />
+    <result column="ope_order_id" jdbcType="INTEGER" property="opeOrderId" />
+    <result column="ope_type" jdbcType="VARCHAR" property="opeType" />
+    <result column="ope_time" jdbcType="TIMESTAMP" property="opeTime" />
+    <result column="ope_reason" jdbcType="VARCHAR" property="opeReason" />
+    <result column="ope_state" jdbcType="VARCHAR" property="opeState" />
+    <result column="ope_finish" jdbcType="TIMESTAMP" property="opeFinish" />
+  </resultMap>
+
+
+  <insert id="insert" parameterType="com.lzx.entity.OrderOpeartion" useGeneratedKeys="true" keyColumn="ope_id">
+    insert into order_opeartion (ope_order_id, ope_type,  ope_time, ope_reason, ope_state)
+    values ( #{opeOrderId,jdbcType=INTEGER}, #{opeType,jdbcType=VARCHAR},
+      #{opeTime,jdbcType=TIMESTAMP}, #{opeReason,jdbcType=VARCHAR}, '待处理')
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lzx.entity.OrderOpeartion">
+    update order_opeartion
+    set ope_state = #{opeState,jdbcType=VARCHAR},ope_finish = now()
+    where ope_id = #{opeId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select ope_id, ope_order_id, ope_type, ope_time, ope_reason, ope_state, ope_finish
+    from order_opeartion
+    where ope_id = #{opeId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ope_id, ope_order_id, ope_type, ope_time, ope_reason, ope_state, ope_finish
+    from order_opeartion order by ope_time desc
+  </select>
+</mapper>
