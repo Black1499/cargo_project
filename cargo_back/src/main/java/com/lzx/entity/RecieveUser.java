@@ -11,6 +11,10 @@ public class RecieveUser {
 
     private String recPassword;
 
+    private Date recCreated;
+
+    private String recState;
+
     private String recPhoto;
 
     private String recName;
@@ -56,7 +60,7 @@ public class RecieveUser {
     }
 
     public void setRecNumber(String recNumber) {
-        this.recNumber = recNumber == null ? null : recNumber.trim();
+        this.recNumber = recNumber;
     }
 
     public String getRecPassword() {
@@ -64,7 +68,23 @@ public class RecieveUser {
     }
 
     public void setRecPassword(String recPassword) {
-        this.recPassword = recPassword == null ? null : recPassword.trim();
+        this.recPassword = recPassword;
+    }
+
+    public Date getRecCreated() {
+        return recCreated;
+    }
+
+    public void setRecCreated(Date recCreated) {
+        this.recCreated = recCreated;
+    }
+
+    public String getRecState() {
+        return recState;
+    }
+
+    public void setRecState(String recState) {
+        this.recState = recState;
     }
 
     public String getRecPhoto() {
@@ -72,7 +92,7 @@ public class RecieveUser {
     }
 
     public void setRecPhoto(String recPhoto) {
-        this.recPhoto = recPhoto == null ? null : recPhoto.trim();
+        this.recPhoto = recPhoto;
     }
 
     public String getRecName() {
@@ -80,7 +100,7 @@ public class RecieveUser {
     }
 
     public void setRecName(String recName) {
-        this.recName = recName == null ? null : recName.trim();
+        this.recName = recName;
     }
 
     public String getRecSex() {
@@ -88,7 +108,7 @@ public class RecieveUser {
     }
 
     public void setRecSex(String recSex) {
-        this.recSex = recSex == null ? null : recSex.trim();
+        this.recSex = recSex;
     }
 
     public Date getRecBirthday() {
@@ -104,7 +124,7 @@ public class RecieveUser {
     }
 
     public void setRecPalce(String recPalce) {
-        this.recPalce = recPalce == null ? null : recPalce.trim();
+        this.recPalce = recPalce;
     }
 
     public String getRecIdNumber() {
@@ -112,7 +132,7 @@ public class RecieveUser {
     }
 
     public void setRecIdNumber(String recIdNumber) {
-        this.recIdNumber = recIdNumber == null ? null : recIdNumber.trim();
+        this.recIdNumber = recIdNumber;
     }
 
     public String getRecDriverNumber() {
@@ -120,7 +140,7 @@ public class RecieveUser {
     }
 
     public void setRecDriverNumber(String recDriverNumber) {
-        this.recDriverNumber = recDriverNumber == null ? null : recDriverNumber.trim();
+        this.recDriverNumber = recDriverNumber;
     }
 
     public String getRecCarNumer() {
@@ -128,7 +148,7 @@ public class RecieveUser {
     }
 
     public void setRecCarNumer(String recCarNumer) {
-        this.recCarNumer = recCarNumer == null ? null : recCarNumer.trim();
+        this.recCarNumer = recCarNumer;
     }
 
     public String getRecVehicleType() {
@@ -136,7 +156,7 @@ public class RecieveUser {
     }
 
     public void setRecVehicleType(String recVehicleType) {
-        this.recVehicleType = recVehicleType == null ? null : recVehicleType.trim();
+        this.recVehicleType = recVehicleType;
     }
 
     public Date getRecStartTime() {
@@ -161,5 +181,28 @@ public class RecieveUser {
 
     public void setRecOrderCompletionNumber(Integer recOrderCompletionNumber) {
         this.recOrderCompletionNumber = recOrderCompletionNumber;
+    }
+
+    public RecieveUser() {
+    }
+
+    public RecieveUser(String recNumber, String recPassword) {
+        this.recNumber = recNumber;
+        this.recPassword = recPassword;
+    }
+
+    public RecieveUser(Integer recCarTypeId, String recNumber, String recName, String recSex, Date recBirthday, String recPalce, String recIdNumber, String recDriverNumber, String recCarNumer, String recVehicleType, Date recStartTime, Date recEffectiveTime) {
+        this.recCarTypeId = recCarTypeId;
+        this.recNumber = recNumber;
+        this.recName = recName;
+        this.recSex = recSex;
+        this.recBirthday = recBirthday;
+        this.recPalce = recPalce;
+        this.recIdNumber = recIdNumber;
+        this.recDriverNumber = recDriverNumber;
+        this.recCarNumer = recCarNumer;
+        this.recVehicleType = recVehicleType;
+        this.recStartTime = recStartTime;
+        this.recEffectiveTime = recEffectiveTime;
     }
 }

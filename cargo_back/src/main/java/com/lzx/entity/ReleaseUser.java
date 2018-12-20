@@ -9,6 +9,10 @@ public class ReleaseUser {
 
     private String relPassword;
 
+    private Date relCreated;
+
+    private String relState;
+
     private String relPhoto;
 
     private String relName;
@@ -47,6 +51,22 @@ public class ReleaseUser {
 
     public void setRelPassword(String relPassword) {
         this.relPassword = relPassword == null ? null : relPassword.trim();
+    }
+
+    public Date getRelCreated() {
+        return relCreated;
+    }
+
+    public void setRelCreated(Date relCreated) {
+        this.relCreated = relCreated;
+    }
+
+    public String getRelState() {
+        return relState;
+    }
+
+    public void setRelState(String relState) {
+        this.relState = relState == null ? null : relState.trim();
     }
 
     public String getRelPhoto() {
@@ -111,5 +131,22 @@ public class ReleaseUser {
 
     public void setRelOrderCancelNumber(Integer relOrderCancelNumber) {
         this.relOrderCancelNumber = relOrderCancelNumber;
+    }
+
+    public ReleaseUser() {
+    }
+
+    public ReleaseUser(String relNumber, String relPassword) {
+        this.relNumber = relNumber;
+        this.relPassword = relPassword;
+    }
+
+    public ReleaseUser(String relNumber, String relName, String relSex, Date relBirthday, String relPalce, String relIdNumber) {
+        this.relNumber = relNumber;
+        this.relName = relName;
+        this.relSex = relSex;
+        this.relBirthday = relBirthday;
+        this.relPalce = relPalce;
+        this.relIdNumber = relIdNumber;
     }
 }

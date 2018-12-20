@@ -4,11 +4,11 @@ import com.lzx.entity.Country;
 import java.util.List;
 
 public interface CountryMapper {
-    int deleteByPrimaryKey(Integer courtryId);
+    int deleteByPrimaryKey(Integer countryId);
 
     int insert(Country record);
 
-    Country selectByPrimaryKey(Integer courtryId);
+    Country selectByPrimaryKey(Integer countryId);
 
     List<Country> selectAll();
 

@@ -1,33 +1,33 @@
 package com.lzx.entity;
 
 public class Country {
-    private Integer courtryId;
+    private Integer countryId;
 
-    private String courtryName;
+    private String countryName;
 
-    private Integer courtryPid;
+    private Integer countryPid;
 
-    public Integer getCourtryId() {
-        return courtryId;
+    public Integer getCountryId() {
+        return countryId;
     }
 
-    public void setCourtryId(Integer courtryId) {
-        this.courtryId = courtryId;
+    public void setCountryId(Integer countryId) {
+        this.countryId = countryId;
     }
 
-    public String getCourtryName() {
-        return courtryName;
+    public String getCountryName() {
+        return countryName;
     }
 
-    public void setCourtryName(String courtryName) {
-        this.courtryName = courtryName == null ? null : courtryName.trim();
+    public void setCountryName(String countryName) {
+        this.countryName = countryName == null ? null : countryName.trim();
     }
 
-    public Integer getCourtryPid() {
-        return courtryPid;
+    public Integer getCountryPid() {
+        return countryPid;
     }
 
-    public void setCourtryPid(Integer courtryPid) {
-        this.courtryPid = courtryPid;
+    public void setCountryPid(Integer countryPid) {
+        this.countryPid = countryPid;
     }
 }

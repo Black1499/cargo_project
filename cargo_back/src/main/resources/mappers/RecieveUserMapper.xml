@@ -6,6 +6,8 @@
     <result column="rec_car_type_id" jdbcType="INTEGER" property="recCarTypeId" />
     <result column="rec_number" jdbcType="VARCHAR" property="recNumber" />
     <result column="rec_password" jdbcType="VARCHAR" property="recPassword" />
+    <result column="rec_created" jdbcType="TIMESTAMP" property="recCreated" />
+    <result column="rec_state" jdbcType="VARCHAR" property="recState" />
     <result column="rec_photo" jdbcType="VARCHAR" property="recPhoto" />
     <result column="rec_name" jdbcType="VARCHAR" property="recName" />
     <result column="rec_sex" jdbcType="VARCHAR" property="recSex" />
@@ -19,30 +21,16 @@
     <result column="rec_effective_time" jdbcType="DATE" property="recEffectiveTime" />
     <result column="rec_order_completion_number" jdbcType="INTEGER" property="recOrderCompletionNumber" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from recieve_user
-    where rec_id = #{recId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.lzx.entity.RecieveUser">
-    insert into recieve_user (rec_id, rec_car_type_id, rec_number, 
-      rec_password, rec_photo, rec_name, 
-      rec_sex, rec_birthday, rec_palce, 
-      rec_id_number, rec_driver_number, rec_car_numer, 
-      rec_vehicle_type, rec_start_time, rec_effective_time, 
-      rec_order_completion_number)
-    values (#{recId,jdbcType=INTEGER}, #{recCarTypeId,jdbcType=INTEGER}, #{recNumber,jdbcType=VARCHAR}, 
-      #{recPassword,jdbcType=VARCHAR}, #{recPhoto,jdbcType=VARCHAR}, #{recName,jdbcType=VARCHAR}, 
-      #{recSex,jdbcType=VARCHAR}, #{recBirthday,jdbcType=DATE}, #{recPalce,jdbcType=VARCHAR}, 
-      #{recIdNumber,jdbcType=VARCHAR}, #{recDriverNumber,jdbcType=VARCHAR}, #{recCarNumer,jdbcType=VARCHAR}, 
-      #{recVehicleType,jdbcType=VARCHAR}, #{recStartTime,jdbcType=DATE}, #{recEffectiveTime,jdbcType=DATE}, 
-      #{recOrderCompletionNumber,jdbcType=INTEGER})
+
+  <insert id="insert" parameterType="com.lzx.entity.RecieveUser" useGeneratedKeys="true" keyColumn="rec_id">
+    insert into recieve_user (rec_number, rec_password, rec_created,rec_state,rec_order_completion_number)
+    values (#{recNumber,jdbcType=VARCHAR}, #{recPassword,jdbcType=VARCHAR}, now(), '登录',0)
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.lzx.entity.RecieveUser">
+
+
+  <update id="updateInfoByRecieveUser">
     update recieve_user
     set rec_car_type_id = #{recCarTypeId,jdbcType=INTEGER},
-      rec_number = #{recNumber,jdbcType=VARCHAR},
-      rec_password = #{recPassword,jdbcType=VARCHAR},
-      rec_photo = #{recPhoto,jdbcType=VARCHAR},
       rec_name = #{recName,jdbcType=VARCHAR},
       rec_sex = #{recSex,jdbcType=VARCHAR},
       rec_birthday = #{recBirthday,jdbcType=DATE},
@@ -52,21 +40,51 @@
       rec_car_numer = #{recCarNumer,jdbcType=VARCHAR},
       rec_vehicle_type = #{recVehicleType,jdbcType=VARCHAR},
       rec_start_time = #{recStartTime,jdbcType=DATE},
-      rec_effective_time = #{recEffectiveTime,jdbcType=DATE},
-      rec_order_completion_number = #{recOrderCompletionNumber,jdbcType=INTEGER}
-    where rec_id = #{recId,jdbcType=INTEGER}
+      rec_effective_time = #{recEffectiveTime,jdbcType=DATE}
+    where rec_number = #{recNumber,jdbcType=VARCHAR}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select rec_id, rec_car_type_id, rec_number, rec_password, rec_photo, rec_name, rec_sex, 
-    rec_birthday, rec_palce, rec_id_number, rec_driver_number, rec_car_numer, rec_vehicle_type, 
-    rec_start_time, rec_effective_time, rec_order_completion_number
-    from recieve_user
-    where rec_id = #{recId,jdbcType=INTEGER}
-  </select>
+
+  <update id="updateStateByRecieveUser">
+    update recieve_user
+    set rec_state = #{rec_state, jdbcType=VARCHAR}
+    where rec_number = #{rec_number, jdbcType=VARCHAR}
+  </update>
+
+  <update id="updatePhotoByRecieveUser">
+      update recieve_user
+      set rec_photo = #{rec_photo, jdbcType=VARCHAR}
+      where rec_number = #{rec_number, jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateCompletionNumberByRecieveUser">
+      update recieve_user
+      set rec_order_completion_number = rec_order_completion_number + 1
+      where rec_number = #{recNumber, jdbcType=VARCHAR}
+  </update>
+
+  <update id="updatePasswordByRecieveUser">
+      update recieve_user
+      set rec_password = #{recPassword, jdbcType=VARCHAR}
+      where rec_number = #{recNumber, jdbcType=VARCHAR}
+  </update>
+
   <select id="selectAll" resultMap="BaseResultMap">
-    select rec_id, rec_car_type_id, rec_number, rec_password, rec_photo, rec_name, rec_sex, 
-    rec_birthday, rec_palce, rec_id_number, rec_driver_number, rec_car_numer, rec_vehicle_type, 
-    rec_start_time, rec_effective_time, rec_order_completion_number
+    select rec_id, rec_car_type_id, rec_number, rec_password, rec_created, rec_state, 
+    rec_photo, rec_name, rec_sex, rec_birthday, rec_palce, rec_id_number, rec_driver_number, 
+    rec_car_numer, rec_vehicle_type, rec_start_time, rec_effective_time, rec_order_completion_number
     from recieve_user
   </select>
+
+  <select id="selectByPhoneAndPassword" resultMap="BaseResultMap">
+    select rec_id, rec_car_type_id, rec_number, rec_password, rec_created, rec_state,
+    rec_photo, rec_name, rec_sex, rec_birthday, rec_palce, rec_id_number, rec_driver_number,
+    rec_car_numer, rec_vehicle_type, rec_start_time, rec_effective_time, rec_order_completion_number
+    from recieve_user
+    where rec_number = #{recNumber, jdbcType=VARCHAR} and rec_password = #{recPassword, jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByCreated" resultType="integer">
+     select count(*) from recieve_user where rec_created like concat(#{date}, '%')
+  </select>
+
 </mapper>

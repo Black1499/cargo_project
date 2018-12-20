@@ -19,6 +19,5 @@ public interface CommentMapper {
 
     int updateAgreeCount(int comId);
 
-    @MapKey("com_post_id")
-    Map<Integer, Integer> countCommentByPostId(Integer postId);
+    Integer countCommentByPostId(Integer postId);
 }

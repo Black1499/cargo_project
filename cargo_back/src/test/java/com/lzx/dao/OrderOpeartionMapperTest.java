@@ -1,12 +1,9 @@
 package com.lzx.dao;
 
 import com.lzx.base.BaseSpringTest;
-import com.lzx.entity.Order;
 import com.lzx.entity.OrderOpeartion;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.junit.Assert.*;
 
 public class OrderOpeartionMapperTest extends BaseSpringTest {
 

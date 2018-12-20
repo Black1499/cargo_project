@@ -29,7 +29,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.lzx.dao"  targetProject="src\main\java">
         </javaClientGenerator>
 
-        <table tableName="%">
+        <table tableName="order">
             <property name="useActualColumnNames" value="false"/>
         </table>
     </context>

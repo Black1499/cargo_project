@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Order {
-    private Integer orderId;
+    private String orderId;
 
     private Integer orderRelUser;
 
@@ -13,6 +13,10 @@ public class Order {
     private Integer orderCarTypeId;
 
     private Date orderCreated;
+
+    private Date orderTaked;
+
+    private Date orderFinished;
 
     private String orderDescribe;
 
@@ -24,12 +28,12 @@ public class Order {
 
     private String orderState;
 
-    public Integer getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId == null ? null : orderId.trim();
     }
 
     public Integer getOrderRelUser() {
@@ -62,6 +66,22 @@ public class Order {
 
     public void setOrderCreated(Date orderCreated) {
         this.orderCreated = orderCreated;
+    }
+
+    public Date getOrderTaked() {
+        return orderTaked;
+    }
+
+    public void setOrderTaked(Date orderTaked) {
+        this.orderTaked = orderTaked;
+    }
+
+    public Date getOrderFinished() {
+        return orderFinished;
+    }
+
+    public void setOrderFinished(Date orderFinished) {
+        this.orderFinished = orderFinished;
     }
 
     public String getOrderDescribe() {
@@ -102,5 +122,24 @@ public class Order {
 
     public void setOrderState(String orderState) {
         this.orderState = orderState == null ? null : orderState.trim();
+    }
+
+    public Order() {
+    }
+
+    public Order(String orderId, String orderState) {
+        this.orderId = orderId;
+        this.orderState = orderState;
+    }
+
+    public Order(String orderId, Integer orderRelUser, Integer orderRecUser, Integer orderCarTypeId, String orderDescribe, BigDecimal orderMoney, String orderStartPlace, String orderEndPlace) {
+        this.orderId = orderId;
+        this.orderRelUser = orderRelUser;
+        this.orderRecUser = orderRecUser;
+        this.orderCarTypeId = orderCarTypeId;
+        this.orderDescribe = orderDescribe;
+        this.orderMoney = orderMoney;
+        this.orderStartPlace = orderStartPlace;
+        this.orderEndPlace = orderEndPlace;
     }
 }

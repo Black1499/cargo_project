@@ -13,6 +13,7 @@ import java.util.*;
 
 @Controller
 public class ContainerHelper {
+
     @Autowired
     private WebApplicationContext context;
 
@@ -21,18 +22,17 @@ public class ContainerHelper {
     public HashMap<String, Object> status(HttpServletRequest request, HttpSession session) {
         ArrayList<String> reqAttrs = new ArrayList<>();
         Enumeration<String> reqNames = request.getAttributeNames();
-        while (reqNames.hasMoreElements()) reqAttrs.add(reqNames.nextElement());
+        while (reqNames.hasMoreElements()) {
+            reqAttrs.add(reqNames.nextElement());
+        }
 
         ArrayList<String> sessAttrs = new ArrayList<>();
         Enumeration<String> sessNames = session.getAttributeNames();
-        while (sessNames.hasMoreElements()) sessAttrs.add(sessNames.nextElement());
+        while (sessNames.hasMoreElements()) {
+            sessAttrs.add(sessNames.nextElement());
+        }
 
         return new HashMap<String, Object>() {{
-
-//            put("request", reqAttrs);
-//            put("session", sessAttrs);
-//            String[] names = context.getBeanDefinitionNames();
-//            Arrays.sort(names, Collections.reverseOrder());
             put("子容器", Arrays.stream(context.getBeanDefinitionNames()).sorted().toArray(String[]::new));
             put("父容器", Arrays.stream(context.getParent().getBeanDefinitionNames()).sorted().toArray(String[]::new));
         }};
@@ -40,12 +40,14 @@ public class ContainerHelper {
 
     @GetMapping("/session/{key}:{value}")
     @ResponseBody
-    public ArrayList<String> setSession (@PathVariable String key, @PathVariable String value, HttpSession session) {
+    public ArrayList<String> setSession(@PathVariable String key, @PathVariable String value, HttpSession session) {
         session.setAttribute(key, value);
 
         ArrayList<String> sessAttrs = new ArrayList<>();
         Enumeration<String> sessNames = session.getAttributeNames();
-        while (sessNames.hasMoreElements()) sessAttrs.add(sessNames.nextElement());
+        while (sessNames.hasMoreElements()) {
+            sessAttrs.add(sessNames.nextElement());
+        }
 
         return sessAttrs;
     }

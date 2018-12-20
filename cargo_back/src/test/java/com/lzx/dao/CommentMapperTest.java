@@ -31,7 +31,7 @@ public class CommentMapperTest extends BaseSpringTest {
 
     @Test
     public void countCommentByPostId(){
-        Map<Integer,Integer> map=  mapper.countCommentByPostId(1);
-        System.out.println(map.get(1));
+        int num =  mapper.countCommentByPostId(1);
+        System.out.println(num);
     }
 }

@@ -29,8 +29,8 @@
     where com_post_id = #{postId,jdbcType=INTEGER} order by com_agree_count desc
   </select>
 
-  <select id="countCommentByPostId" resultType="java.util.Map">
-    select com_post_id,count(*) from comment where com_post_id = #{postId,jdbcType=INTEGER}
+  <select id="countCommentByPostId" resultType="integer">
+    select count(*) from comment where com_post_id = #{postId,jdbcType=INTEGER}
   </select>
 
 </mapper>

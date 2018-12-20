@@ -2,33 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lzx.dao.CountryMapper">
   <resultMap id="BaseResultMap" type="com.lzx.entity.Country">
-    <id column="courtry_id" jdbcType="INTEGER" property="courtryId" />
-    <result column="courtry_name" jdbcType="VARCHAR" property="courtryName" />
-    <result column="courtry_pid" jdbcType="INTEGER" property="courtryPid" />
+    <id column="country_id" jdbcType="INTEGER" property="countryId" />
+    <result column="country_name" jdbcType="VARCHAR" property="countryName" />
+    <result column="country_pid" jdbcType="INTEGER" property="countryPid" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from country
-    where courtry_id = #{courtryId,jdbcType=INTEGER}
+    where country_id = #{countryId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.lzx.entity.Country">
-    insert into country (courtry_id, courtry_name, courtry_pid
+    insert into country (country_id, country_name, country_pid
       )
-    values (#{courtryId,jdbcType=INTEGER}, #{courtryName,jdbcType=VARCHAR}, #{courtryPid,jdbcType=INTEGER}
+    values (#{countryId,jdbcType=INTEGER}, #{countryName,jdbcType=VARCHAR}, #{countryPid,jdbcType=INTEGER}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.lzx.entity.Country">
     update country
-    set courtry_name = #{courtryName,jdbcType=VARCHAR},
-      courtry_pid = #{courtryPid,jdbcType=INTEGER}
-    where courtry_id = #{courtryId,jdbcType=INTEGER}
+    set country_name = #{countryName,jdbcType=VARCHAR},
+      country_pid = #{countryPid,jdbcType=INTEGER}
+    where country_id = #{countryId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select courtry_id, courtry_name, courtry_pid
+    select country_id, country_name, country_pid
     from country
-    where courtry_id = #{courtryId,jdbcType=INTEGER}
+    where country_id = #{countryId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select courtry_id, courtry_name, courtry_pid
+    select country_id, country_name, country_pid
     from country
   </select>
 </mapper>

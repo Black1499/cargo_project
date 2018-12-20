@@ -1,54 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lzx.dao.OrderMapper">
+
   <resultMap id="BaseResultMap" type="com.lzx.entity.Order">
-    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="order_rel_user" jdbcType="INTEGER" property="orderRelUser" />
     <result column="order_rec_user" jdbcType="INTEGER" property="orderRecUser" />
     <result column="order_car_type_id" jdbcType="INTEGER" property="orderCarTypeId" />
     <result column="order_created" jdbcType="TIMESTAMP" property="orderCreated" />
+    <result column="order_taked" jdbcType="TIMESTAMP" property="orderTaked" />
+    <result column="order_finished" jdbcType="TIMESTAMP" property="orderFinished" />
     <result column="order_describe" jdbcType="VARCHAR" property="orderDescribe" />
     <result column="order_money" jdbcType="DECIMAL" property="orderMoney" />
     <result column="order_start_place" jdbcType="VARCHAR" property="orderStartPlace" />
     <result column="order_end_place" jdbcType="VARCHAR" property="orderEndPlace" />
     <result column="order_state" jdbcType="VARCHAR" property="orderState" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
-    where order_id = #{orderId,jdbcType=INTEGER}
-  </delete>
+
   <insert id="insert" parameterType="com.lzx.entity.Order">
-    insert into order (order_id, order_rel_user, order_rec_user, 
-      order_car_type_id, order_created, order_describe, 
-      order_money, order_start_place, order_end_place, 
-      order_state)
-    values (#{orderId,jdbcType=INTEGER}, #{orderRelUser,jdbcType=INTEGER}, #{orderRecUser,jdbcType=INTEGER}, 
-      #{orderCarTypeId,jdbcType=INTEGER}, #{orderCreated,jdbcType=TIMESTAMP}, #{orderDescribe,jdbcType=VARCHAR}, 
-      #{orderMoney,jdbcType=DECIMAL}, #{orderStartPlace,jdbcType=VARCHAR}, #{orderEndPlace,jdbcType=VARCHAR}, 
-      #{orderState,jdbcType=VARCHAR})
+    insert into `order` (order_id, order_rel_user, order_rec_user,
+      order_car_type_id, order_created,order_describe, order_money,
+      order_start_place, order_end_place, order_state
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{orderRelUser,jdbcType=INTEGER}, #{orderRecUser,jdbcType=INTEGER}, 
+      #{orderCarTypeId,jdbcType=INTEGER}, now() ,#{orderDescribe,jdbcType=VARCHAR}, #{orderMoney,jdbcType=DECIMAL},
+      #{orderStartPlace,jdbcType=VARCHAR}, #{orderEndPlace,jdbcType=VARCHAR}, '待接单'
+      )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.lzx.entity.Order">
-    update order
-    set order_rel_user = #{orderRelUser,jdbcType=INTEGER},
-      order_rec_user = #{orderRecUser,jdbcType=INTEGER},
-      order_car_type_id = #{orderCarTypeId,jdbcType=INTEGER},
-      order_created = #{orderCreated,jdbcType=TIMESTAMP},
-      order_describe = #{orderDescribe,jdbcType=VARCHAR},
-      order_money = #{orderMoney,jdbcType=DECIMAL},
-      order_start_place = #{orderStartPlace,jdbcType=VARCHAR},
-      order_end_place = #{orderEndPlace,jdbcType=VARCHAR},
-      order_state = #{orderState,jdbcType=VARCHAR}
-    where order_id = #{orderId,jdbcType=INTEGER}
+
+  <update id="updateStateByPrimaryKey">
+    update `order`
+    <set>
+      <if test="orderState == '已完成'">order_finished = now()</if>
+      <if test="orderState == '已接单'">order_taked = now()</if>
+    </set>
+    ,order_state = #{orderState,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select order_id, order_rel_user, order_rec_user, order_car_type_id, order_created, 
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select order_id, order_rel_user, order_rec_user, order_car_type_id, order_created,order_taked,order_finished,
     order_describe, order_money, order_start_place, order_end_place, order_state
-    from order
-    where order_id = #{orderId,jdbcType=INTEGER}
+    from `order`
+    where order_id = #{orderId}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
-    select order_id, order_rel_user, order_rec_user, order_car_type_id, order_created, 
+    select order_id, order_rel_user, order_rec_user, order_car_type_id, order_created,order_taked,order_finished,
     order_describe, order_money, order_start_place, order_end_place, order_state
-    from order
+    from `order`
+  </select>
+
+  <select id="selectByState" resultType="com.lzx.entity.Order">
+    select order_id, order_rel_user, order_rec_user, order_car_type_id, order_created,order_taked,order_finished,
+    order_describe, order_money, order_start_place, order_end_place, order_state
+    from `order`
+    where order_state = #{order_state, jdbcType=VARCHAR}
+  </select>
+
+  <select id="countByStateOrFinished" resultType="java.lang.Integer">
+    select count(*) from `order`
+    where order_state = #{order_state,jdbcType=VARCHAR}
+    <if test="order_finished != null">
+      and order_finished like concat(#{order_finished}, '%')
+    </if>
+  </select>
+
+  <select id="avgMoneyByFinised" resultType="java.math.BigDecimal">
+    select avg(order_money) from `order`
+            where order_finished like concat(#{date},'%')
+  </select>
+
+  <select id="sumMoneyByFinished" resultType="java.lang.Integer">
+      select sum(order_money) from `order`
+        where order_finished like concat(#{date}, '%')
   </select>
 </mapper>

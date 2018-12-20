@@ -1,16 +1,34 @@
 package com.lzx.dao;
 
+import com.lzx.entity.RecieveUser;
 import com.lzx.entity.ReleaseUser;
-import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+/**
+ * @author lzx
+ * @date 2018/12/17
+ */
 public interface ReleaseUserMapper {
-    int deleteByPrimaryKey(Integer relId);
 
     int insert(ReleaseUser record);
 
-    ReleaseUser selectByPrimaryKey(Integer relId);
+    ReleaseUser selectByPhoneAndPassword(ReleaseUser record);
 
-    List<ReleaseUser> selectAll();
+    List<RecieveUser> selectAll();
 
-    int updateByPrimaryKey(ReleaseUser record);
+    Integer selectByCreated(String date);
+
+    int updatePasswordByReleaseUser(ReleaseUser record);
+
+    int updateInfoByReleaseUser(ReleaseUser record);
+
+    int updateStateByReleaseUser(@Param("rel_number") String relNumber, @Param("rel_state") String relState);
+
+    int updatePhotoByReleaseUser(@Param("rel_number") String relNumber, @Param("rel_photo") String relPhoto);
+
+    int updateCompletionNumberByReleaseUser(String relNumber);
+
+    int updateCancelNumberByReleaseUser(String relNumber);
+
 }
